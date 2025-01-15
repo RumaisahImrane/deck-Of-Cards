@@ -1,4 +1,5 @@
-// Creating a deck of 52 cards
+// Creating a deck of cards
+// 52 cards - 4 suits of 13 cards
 
 
 //Creating an empty array
@@ -8,20 +9,22 @@ let deckOfCards = [];
 const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];
 
 // Mapping each card to the corresponding number value
-function valueOfCard(myCard) {
-  switch (myCard) {
-      // Jack, Queen and King cards are worth 10
-      case 'Jack':
-      case 'Queen':
-      case 'King':
-          return 10; 
-      // Ace card is worth 11
-      case 'Ace':
-          return 11; 
-      default:
-          return parseInt(myCard);
-  }
-}
+const mappingCardValue = {
+  '2': 2,
+  '3': 3,
+  '4': 4,
+  '5': 5,
+  '6': 6,
+  '7': 7,
+  '8': 8,
+  '9': 9,
+  '10': 10,
+  'Jack': 10,
+  'Queen': 10,
+  'King': 10,
+  'Ace': 11
+};
+
 console.log("Giving each card a value:")
 
 // Creating the card deck
@@ -36,7 +39,7 @@ function generateDeckOfCards() {
 }
 
 // Find the value of a card
-function getValueOfCard(myCard) {
+function determineCardValue(myCard) {
   return mappingCardValue[myCard];  
 }
 
@@ -72,8 +75,45 @@ function drawCards() {
 }
 
 // drawCards: array containing two random cards drawn from the shuffled deck of cards
-const selectedCards = drawCards();
+const chosenCards = drawCards();
 
-console.log("Shuffled deck of cards:", deckOfCards);
-console.log("Two cards drawn at random from shuffled deck:", selectedCards);
+console.log("Shuffled deck of cards", deckOfCards);
+console.log("Two cards drawn at random from shuffled deck", chosenCards);
 
+// Add the cards values together
+// Getting the value of both cards
+let firstCardValue = determineCardValue(chosenCards[0]);  
+let secondCardValue = determineCardValue(chosenCards[1]);  
+// Add the values together
+let finalCardValue = firstCardValue + secondCardValue;
+
+//   for (let i = 0; i < chosenCards.length; i++) {
+//     sumOfBothCards += chosenCards[i];
+// }
+
+console.log("The sum of both cards", finalCardValue);
+
+// Taking the summed card value to decide the next step
+if (finalCardValue === 21) {
+  console.log("Winner! You have blackjack! :) ");
+} else if (finalCardValue > 21) {
+  console.log("You are over 21, You lose! :( ");
+} else {
+  console.log("You are under 21, draw again! "); 
+
+  // Draw another card
+  let bonusCard = deckOfCards.pop();
+  console.log("Another card drawn", bonusCard);
+
+  finalCardValue += determineCardValue(bonusCard);
+  console.log("New Score:", finalCardValue);
+
+  // Take the new summed value, and repeat the next steps again
+  if (finalCardValue === 21) {
+    console.log("Winner! You have blackjack! :) ");
+  } else if (finalCardValue > 21) {
+    console.log("You are over 21, You lose! :( ");
+  } else {
+    console.log("You are under 21, draw again!"); 
+  }
+}
