@@ -33,9 +33,7 @@ function generateDeckInUse() {
   // repeated 4x for the 4 suits 
   for (let i = 0; i < 4; i++) {  
     // pushing each card from cardValues into deckOfCards
-    for (let myCard of cardValues) {
-      newDeckOfCards.push(myCard); 
-    }
+    newDeckOfCards.push(...cardValues); 
   }
   console.log("Full deck of cards:", newDeckOfCards.length);
   return newDeckOfCards;

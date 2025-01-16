@@ -29,7 +29,7 @@ test('The deck of cards will contain 52 cards', () => {
 // Test: The test will pass if the deck of cards has been shuffled
 test("Deck of cards should be shuffled", () => {
   const deckOfCards = generateDeckInUse();
-  const shuffledDeck = shuffledDeckOfCards(deckOfCards.slice());
+  const shuffledDeck = shuffledDeckOfCards([...deckOfCards]);
   // Still want the deck to contain 52 cards
   expect(shuffledDeck.length).toBe(52);
   // Check if the shuffled deck is different compared to the original deck
