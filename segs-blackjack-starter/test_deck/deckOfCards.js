@@ -31,12 +31,16 @@ console.log("Giving each card a value")
 function generateDeckInUse() {
   const newDeckOfCards = [];
   // repeated 4x for the 4 suits 
-  for (let i = 0; i < 4; i++) {    
-    newDeckOfCards.concat(cardValues)
+  for (let i = 0; i < 4; i++) {  
+    // pushing each card from cardValues into deckOfCards
+    for (let myCard of cardValues) {
+      newDeckOfCards.push(myCard); 
+    }
   }
   console.log("Full deck of cards:", newDeckOfCards.length);
   return newDeckOfCards;
 }
+
 
 // Find the value of a card
 function determineCardValue(myCard) {
@@ -131,3 +135,4 @@ module.exports = {
   determineCardValue,
   drawnCards
 };
+
