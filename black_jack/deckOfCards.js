@@ -67,7 +67,7 @@ function determineCardValue(myCard) {
 // Takes each card, chooses another card at random and swaps them to shuffle
 // Continues down the loop, until currentIndex is 0
 function shuffledDeckOfCards(playingDeck) {
-  let currentIndex = playingDeck.length; // takes the length of deck
+  let currentIndex = playingDeck.length;
   let randomIndex, tempValue;
 
   while (currentIndex !== 0) {
