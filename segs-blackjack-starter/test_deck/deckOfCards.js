@@ -31,11 +31,8 @@ console.log("Giving each card a value")
 function generateDeckInUse() {
   const newDeckOfCards = [];
   // repeated 4x for the 4 suits 
-  for (let i = 0; i < 4; i++) {  
-    // pushing each card from cardValues into deckOfCards
-    for (let myCard of cardValues) {
-      newDeckOfCards.push(myCard); 
-    }
+  for (let i = 0; i < 4; i++) {    
+    newDeckOfCards.concat(cardValues)
   }
   console.log("Full deck of cards:", newDeckOfCards.length);
   return newDeckOfCards;
@@ -87,10 +84,6 @@ let secondCardValue = determineCardValue(chosenCards[1]);
 // Add the values together
 let finalCardValue = firstCardValue + secondCardValue;
 
-//   for (let i = 0; i < chosenCards.length; i++) {
-//     sumOfBothCards += chosenCards[i];
-// }
-
 console.log("The sum of both cards", finalCardValue);
 
 // Taking the summed card value to decide the next step
@@ -106,15 +99,15 @@ if (finalCardValue === 21) {
   // let additionalCard = deckOfCards.pop();
   // let additionalCardValue = getValueOfCard(additionalCard);
 
-  //   // Want to take Ace value as 11 or 1
+  //   // Want to take the value of Ace as 11 or 1
   //   if (additionalCard === 'Ace' && totalCardValue + 11 > 21) {
   //     totalCardValue += 1; 
   //   } else {
   //     totalCardValue += additionalCardValue; 
   //   }
 
+  
   // Draw another card
-
   let bonusCard = deckInUse.pop();
   console.log("Another card drawn", bonusCard);
 
@@ -138,5 +131,3 @@ module.exports = {
   determineCardValue,
   drawnCards
 };
-
-
