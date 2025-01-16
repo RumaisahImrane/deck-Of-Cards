@@ -9,7 +9,7 @@ function howToPlay() {
   console.log("How to play:");
   console.log("- You will be given two cards from a shuffled deck.");
   console.log("- Your values will be added.");
-  console.log("you win blackjack if your score is 21!");
+  console.log("- you win blackjack if your score is 21!");
   console.log("- If you're under 21, you get to draw again.");
   console.log("- You will draw cards until you get 21 or go over it.");
   console.log("- If your hand goes over 21, you lose :(");
