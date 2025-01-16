@@ -75,7 +75,7 @@ console.log("Shuffled deck of cards", deckInUse);
 
 // drawnCards: array containing two random cards drawn from the shuffled deck of cards
 const chosenCards = drawnCards(deckInUse);
-console.log("Two cards drawn at random from shuffled deck", chosenCards);
+console.log("Two cards drawn at random from shuffled deck:", chosenCards);
 
 // Add the cards values together
 // Getting the value of both cards
