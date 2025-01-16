@@ -3,7 +3,7 @@
 
 
 //Creating an empty array
-let deckOfCards = []; 
+let deckInUse = []; 
       
 // Adding the cards 
 const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];
@@ -25,17 +25,20 @@ const mappingCardValue = {
   'Ace': 11
 };
 
-console.log("Giving each card a value:")
+console.log("Giving each card a value")
 
 // Creating the card deck
-function generateDeckOfCards() {
+function generateDeckInUse() {
+  const newDeckOfCards = [];
   // repeated 4x for the 4 suits 
   for (let i = 0; i < 4; i++) {  
     // pushing each card from cardValues into deckOfCards
     for (let myCard of cardValues) {
-      deckOfCards.push(myCard); 
+      newDeckOfCards.push(myCard); 
     }
   }
+  console.log("Full deck of cards:", newDeckOfCards.length);
+  return newDeckOfCards;
 }
 
 // Find the value of a card
@@ -43,16 +46,12 @@ function determineCardValue(myCard) {
   return mappingCardValue[myCard];  
 }
 
-generateDeckOfCards();
-
-console.log("Full deck of cards:", deckOfCards);
-
 
 // Shuffle deck of cards using Fisher-Yates shuffle algorithm
 // Takes each card, chooses another card at random and swaps them to shuffle
 // Continues down the loop, until currentIndex is 0
-function shuffledDeckOfCards() {
-  let currentIndex = deckOfCards.length; // takes the length of deck
+function shuffledDeckOfCards(playingDeck) {
+  let currentIndex = playingDeck.length; // takes the length of deck
   let randomIndex, tempValue;
 
   while (currentIndex !== 0) {
@@ -60,24 +59,25 @@ function shuffledDeckOfCards() {
     currentIndex--;
 
     // Swap the current element with the random one
-    tempValue = deckOfCards[currentIndex];
-    deckOfCards[currentIndex] = deckOfCards[randomIndex];
-    deckOfCards[randomIndex] = tempValue;
+    tempValue = playingDeck[currentIndex];
+    playingDeck[currentIndex] = playingDeck[randomIndex];
+    playingDeck[randomIndex] = tempValue;
   }
+  return playingDeck;
 }
-
-shuffledDeckOfCards();
 
 // Draw 2 cards from the shuffled deck and place in drawnCards
-function drawCards() {
-  const drawnCards = [deckOfCards.pop(), deckOfCards.pop()];  
-  return drawnCards;
+function drawnCards(playingDeck) {
+  return [playingDeck.pop(), playingDeck.pop()];  
 }
 
-// drawCards: array containing two random cards drawn from the shuffled deck of cards
-const chosenCards = drawCards();
+deckInUse = generateDeckInUse(); 
+deckInUse = shuffledDeckOfCards(deckInUse);
+console.log("Shuffled deck of cards", deckInUse);
 
-console.log("Shuffled deck of cards", deckOfCards);
+
+// drawnCards: array containing two random cards drawn from the shuffled deck of cards
+const chosenCards = drawnCards(deckInUse);
 console.log("Two cards drawn at random from shuffled deck", chosenCards);
 
 // Add the cards values together
@@ -101,8 +101,21 @@ if (finalCardValue === 21) {
 } else {
   console.log("You are under 21, draw again! "); 
 
+
+  // // If under 21, Drawing another card
+  // let additionalCard = deckOfCards.pop();
+  // let additionalCardValue = getValueOfCard(additionalCard);
+
+  //   // Want to take Ace value as 11 or 1
+  //   if (additionalCard === 'Ace' && totalCardValue + 11 > 21) {
+  //     totalCardValue += 1; 
+  //   } else {
+  //     totalCardValue += additionalCardValue; 
+  //   }
+
   // Draw another card
-  let bonusCard = deckOfCards.pop();
+
+  let bonusCard = deckInUse.pop();
   console.log("Another card drawn", bonusCard);
 
   finalCardValue += determineCardValue(bonusCard);
@@ -117,3 +130,13 @@ if (finalCardValue === 21) {
     console.log("You are under 21, draw again!"); 
   }
 }
+
+// Exporting functions for testing
+module.exports = {
+  generateDeckInUse,
+  shuffledDeckOfCards,
+  determineCardValue,
+  drawnCards
+};
+
+
