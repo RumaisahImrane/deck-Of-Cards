@@ -1,6 +1,23 @@
 // Creating a deck of cards
 // 52 cards - 4 suits of 13 cards
 
+// Instructions at the begining of the game
+function howToPlay() {
+  console.log("******************************");
+  console.log("You have joined Blackjack! :)");
+  console.log("******************************");
+  console.log("How to play:");
+  console.log("- You will be given two cards from a shuffled deck.");
+  console.log("- Your values will be added.");
+  console.log("you win blackjack if your score is 21!");
+  console.log("- If you're under 21, you get to draw again.");
+  console.log("- You will draw cards until you get 21 or go over it.");
+  console.log("- If your hand goes over 21, you lose :(");
+  console.log("- Aces are worth 11, but they count as 1 if your total is over 21.");
+  console.log("Good luck!");
+  console.log();
+}
+howToPlay();
 
 //Creating an empty array
 let deckInUse = []; 
@@ -35,7 +52,7 @@ function generateDeckInUse() {
     // pushing each card from cardValues into deckOfCards
     newDeckOfCards.push(...cardValues); 
   }
-  console.log("Full deck of cards:", newDeckOfCards.length);
+  console.log("There are", newDeckOfCards.length, "cards in the deck.");
   return newDeckOfCards;
 }
 
@@ -65,6 +82,7 @@ function shuffledDeckOfCards(playingDeck) {
   return playingDeck;
 }
 
+
 // Draw 2 cards from the shuffled deck and place in drawnCards
 function drawnCards(playingDeck) {
   return [playingDeck.pop(), playingDeck.pop()];  
@@ -72,59 +90,61 @@ function drawnCards(playingDeck) {
 
 deckInUse = generateDeckInUse(); 
 deckInUse = shuffledDeckOfCards(deckInUse);
-console.log("Shuffled deck of cards", deckInUse);
+console.log("Shuffled deck of cards:", deckInUse);
 
+
+let finalCardValue = 0;  
 
 // drawnCards: array containing two random cards drawn from the shuffled deck of cards
 const chosenCards = drawnCards(deckInUse);
-console.log("Two cards drawn at random from shuffled deck:", chosenCards);
+console.log("The two cards drawn at random from the shuffled deck are::", chosenCards);
+
 
 // Add the cards values together
 // Getting the value of both cards
-let firstCardValue = determineCardValue(chosenCards[0]);  
-let secondCardValue = determineCardValue(chosenCards[1]);  
-// Add the values together
-let finalCardValue = firstCardValue + secondCardValue;
+const firstCardValue = determineCardValue(chosenCards[0]);  
+const secondCardValue = determineCardValue(chosenCards[1]);  
+// Add the values together to get the final card value
+finalCardValue = firstCardValue + secondCardValue;
 
-console.log("The sum of both cards", finalCardValue);
-
-// Taking the summed card value to decide the next step
-if (finalCardValue === 21) {
-  console.log("Winner! You have blackjack! :) ");
-} else if (finalCardValue > 21) {
-  console.log("You are over 21, You lose! :( ");
-} else {
-  console.log("You are under 21, draw again! "); 
+console.log("The value of both cards is:", finalCardValue);
 
 
-  // // If under 21, Drawing another card
-  // let additionalCard = deckOfCards.pop();
-  // let additionalCardValue = getValueOfCard(additionalCard);
-
-  //   // Want to take the value of Ace as 11 or 1
-  //   if (additionalCard === 'Ace' && totalCardValue + 11 > 21) {
-  //     totalCardValue += 1; 
-  //   } else {
-  //     totalCardValue += additionalCardValue; 
-  //   }
-
-  
-  // Draw another card
-  let bonusCard = deckInUse.pop();
-  console.log("Another card drawn", bonusCard);
-
-  finalCardValue += determineCardValue(bonusCard);
-  console.log("New Score:", finalCardValue);
-
-  // Take the new summed value, and repeat the next steps again
-  if (finalCardValue === 21) {
-    console.log("Winner! You have blackjack! :) ");
-  } else if (finalCardValue > 21) {
-    console.log("You are over 21, You lose! :( ");
-  } else {
-    console.log("You are under 21, draw again!"); 
-  }
+// Taking the value of Ace as 11 or 1
+if (chosenCards.includes('Ace') && finalCardValue > 21) {
+  finalCardValue -= 10; 
+  console.log("Ace is valued as 1, The new score is:", finalCardValue);
 }
+
+// If hand value is under 21, draw another card
+while (finalCardValue < 21) {
+    console.log("Your hand value is under 21, draw again! "); 
+
+    // Drawing another card
+    let bonusCard = deckInUse.pop();
+    console.log("Another card drawn, the card is:", bonusCard);
+    
+    // Add bonas card to the finalCardValue
+    finalCardValue += determineCardValue(bonusCard);
+    console.log("New Score is:", finalCardValue);
+
+    // If Ace is drawn again, check and adjust if needed
+    if (bonusCard === 'Ace' && finalCardValue > 21) {
+      finalCardValue -= 10; 
+      console.log("Ace is valued as 1, The new score is:", finalCardValue);
+    }
+  }
+
+  // If hand value is over 21, the game is lost
+  if (finalCardValue > 21) {
+    console.log("Your hand value is over 21, You lose! :( ");
+    // If hand value is exactly 21, the game is won with blackjack
+  } else if (finalCardValue === 21) {
+    console.log("Winner! You have blackjack! :) ");
+  } else {
+    console.log("Your final hand value was:", finalCardValue);
+  }
+
 
 // Exporting functions for testing
 module.exports = {
